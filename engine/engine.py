@@ -2,7 +2,7 @@ import pygame
 from pygame import Vector2
 from scipy import constants
 
-from camera import Camera
+from engine.camera import Camera
 
 
 class Engine:

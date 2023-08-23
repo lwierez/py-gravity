@@ -1,8 +1,10 @@
+#!/bin/python3
+
 from pygame import Vector2
 
-from planet import Planet
-from engine import Engine
-from ship import Ship
+from ncorps.objects.planet import Planet
+from engine.engine import Engine
+from ncorps.objects.ship import Ship
 
 
 def main():

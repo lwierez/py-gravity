@@ -1,8 +1,8 @@
 import pygame
 from pygame import Vector2
 
-from body import Body
-from camera import Camera
+from ncorps.objects.body import Body
+from engine.camera import Camera
 
 
 class Ship(Body):
