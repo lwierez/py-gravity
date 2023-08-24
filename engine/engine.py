@@ -36,6 +36,20 @@ class Engine:
     def process(self, delta_time):
         for body in self.bodies:
             self.apply_gravity(body, delta_time)
+
+        for ii, body in enumerate(self.bodies):
+            for other in self.bodies[ii + 1:]:
+                if body.position.distance_to(other.position) < body.radius + other.radius:
+                    # Direction from body to other
+                    direction = other.velocity - body.velocity
+                    if direction.magnitude_squared() > 0:
+                        direction = direction.normalize()
+                        energy_from_body = 0.5 * body.mass * (body.velocity - other.velocity).magnitude_squared()
+                        energy_from_other = 0.5 * other.mass * (other.velocity - body.velocity).magnitude_squared()
+                        body.velocity += energy_from_other / body.mass * direction
+                        other.velocity += energy_from_body / other.mass * -direction
+
+        for body in self.bodies:
             body.on_process(delta_time)
 
     def apply_gravity(self, body, delta_time):
@@ -52,7 +66,7 @@ class Engine:
             # Unit vector from body to b
             unit = (b.position - body.position).normalize()
             # Applying gravity formula
-            f += constants.g * body.mass * b.mass / r * unit
+            f += constants.gravitational_constant * body.mass * b.mass / r * unit
 
         body.velocity += f / body.mass * delta_time
 

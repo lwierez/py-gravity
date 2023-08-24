@@ -3,9 +3,10 @@ from pygame import Vector2
 
 class Body:
     def __init__(self):
+        self.mass = 30
+        self.radius = 10
         self.position = Vector2(0, 0)
         self.velocity = Vector2(0, 0)
-        self.mass = 30
 
     # Called at set up. At this point, bodies are created but pygame is not initialized
     def on_setup(self):

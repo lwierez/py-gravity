@@ -8,6 +8,7 @@ from engine.camera import Camera
 class Ship(Body):
     def __init__(self):
         super().__init__()
+        self.radius = 3
         self.power = 100
         self.font = None
         self.direction = Vector2()
@@ -22,15 +23,13 @@ class Ship(Body):
         self.font = pygame.font.SysFont('Comic Sans Ms', 22)
 
     def on_process(self, delta_time):
-        super().on_process(delta_time)
-
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_SPACE]:
             if not self.lock_space:
                 self.stabilize = not self.stabilize
                 if self.stabilize:
-                    self.power = 500
+                    self.power = 100
                 self.lock_space = True
         elif self.lock_space:
             self.lock_space = False
@@ -58,13 +57,15 @@ class Ship(Body):
 
         self.velocity += self.direction * self.power * delta_time
 
+        super().on_process(delta_time)
+
     def on_render(self, screen, delta_time):
         super().on_render(screen, delta_time)
 
         Camera.active.x = self.position.x
         Camera.active.y = self.position.y
 
-        pygame.draw.circle(screen, (230, 230, 230), (640, 340), max(1, 3 * Camera.scale))
+        pygame.draw.circle(screen, (230, 230, 230), (640, 340), max(1, self.radius * Camera.scale))
 
         screen.blit(
             self.font.render(f"Position: {int(self.position.x)} ; {int(self.position.y)}", False, (240, 240, 240)),
