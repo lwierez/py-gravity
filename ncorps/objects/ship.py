@@ -9,7 +9,8 @@ class Ship(Body):
     def __init__(self):
         super().__init__()
         self.radius = 3
-        self.power = 100
+        self.MAX_POWER = 10
+        self.power = 0
         self.font = None
         self.direction = Vector2()
         self.stabilize = False
@@ -29,7 +30,7 @@ class Ship(Body):
             if not self.lock_space:
                 self.stabilize = not self.stabilize
                 if self.stabilize:
-                    self.power = 100
+                    self.power = self.MAX_POWER
                 self.lock_space = True
         elif self.lock_space:
             self.lock_space = False
@@ -40,13 +41,13 @@ class Ship(Body):
         inputs.y += 1 if keys[pygame.K_DOWN] else 0
         inputs.y -= 1 if keys[pygame.K_UP] else 0
 
-        self.power += 5 if keys[pygame.K_a] else 0
-        self.power -= 5 if keys[pygame.K_q] else 0
-        self.power = max(10, min(self.power, 100))
+        self.power += .1 if keys[pygame.K_a] else 0
+        self.power -= .1 if keys[pygame.K_q] else 0
+        self.power = max(0, min(self.power, self.MAX_POWER))
 
         mouse_inputs = pygame.mouse.get_pressed()
-        Camera.scale *= 0.99 if mouse_inputs[2] else 1
-        Camera.scale *= 1.01 if mouse_inputs[0] else 1
+        Camera.scale *= 0.95 if mouse_inputs[2] else 1
+        Camera.scale *= 1.05 if mouse_inputs[0] else 1
 
         if inputs.magnitude_squared() > 0:
             if self.stabilize:
@@ -78,4 +79,4 @@ class Ship(Body):
         screen.blit(
             self.font.render(f"Stabilize: {'on' if self.stabilize else 'off'}", False, (240, 240, 240)),
             (20, 90))
-        screen.blit(self.font.render(f"Scale: {Camera.scale:.2f}", False, (240, 240, 240)), (20, 110))
+        screen.blit(self.font.render(f"Scale: {Camera.scale:.4f}", False, (240, 240, 240)), (20, 110))

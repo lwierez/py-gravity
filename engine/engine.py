@@ -6,6 +6,8 @@ from engine.camera import Camera
 
 
 class Engine:
+    GRAVITATIONAL_CONSTANT = constants.gravitational_constant * 10e-9
+
     def __init__(self):
         self.is_setup = False
         self.is_running = False
@@ -66,7 +68,7 @@ class Engine:
             # Unit vector from body to b
             unit = (b.position - body.position).normalize()
             # Applying gravity formula
-            f += constants.gravitational_constant * body.mass * b.mass / r * unit
+            f += self.GRAVITATIONAL_CONSTANT * body.mass * b.mass / r * unit
 
         body.velocity += f / body.mass * delta_time
 
