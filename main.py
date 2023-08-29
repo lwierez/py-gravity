@@ -16,8 +16,8 @@ def main():
     heart.color = (65, 105, 225)
 
     iss = Planet()
-    iss.position = Vector2(6370 + 420, 0)
-    iss.velocity = Vector2(0, -7.66)
+    iss.position = Vector2(6370 + 430, 0)
+    iss.velocity = Vector2(0, 25)
     iss.mass = 450000
     iss.radius = 3
     iss.color = (255, 255, 255)
@@ -30,8 +30,7 @@ def main():
     moon.color = (246, 241, 213)
 
     player = Ship()
-    player.position = Vector2(384400 + 100, 0)
-    moon.velocity = Vector2(0, -0)
+    player.position = Vector2(6370 + 422 + 180, 0)
     player.mass = 30000
 
     bodies = [heart, iss, moon, player]

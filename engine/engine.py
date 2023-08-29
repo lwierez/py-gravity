@@ -42,14 +42,9 @@ class Engine:
         for ii, body in enumerate(self.bodies):
             for other in self.bodies[ii + 1:]:
                 if body.position.distance_to(other.position) < body.radius + other.radius:
-                    # Direction from body to other
-                    direction = other.velocity - body.velocity
-                    if direction.magnitude_squared() > 0:
-                        direction = direction.normalize()
-                        energy_from_body = 0.5 * body.mass * (body.velocity - other.velocity).magnitude_squared()
-                        energy_from_other = 0.5 * other.mass * (other.velocity - body.velocity).magnitude_squared()
-                        body.velocity += energy_from_other / body.mass * direction
-                        other.velocity += energy_from_body / other.mass * -direction
+                    v = (body.mass * body.velocity + other.mass * other.velocity) / (body.mass + other.mass)
+                    body.velocity = v.copy()
+                    other.velocity = v.copy()
 
         for body in self.bodies:
             body.on_process(delta_time)

@@ -71,7 +71,7 @@ class Ship(Body):
         screen.blit(
             self.font.render(f"Position: {int(self.position.x)} ; {int(self.position.y)}", False, (240, 240, 240)),
             (20, 10))
-        screen.blit(self.font.render(f"Speed: {int(self.velocity.magnitude())}", False, (240, 240, 240)), (20, 30))
+        screen.blit(self.font.render(f"Speed: {self.velocity.magnitude():.4n}", False, (240, 240, 240)), (20, 30))
         screen.blit(
             self.font.render(f"Direction: {self.direction.x:.2n} ; {self.direction.y:.2n}", False, (240, 240, 240)),
             (20, 50))
